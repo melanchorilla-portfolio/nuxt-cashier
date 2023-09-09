@@ -9,7 +9,7 @@
           :loading="isLoading"
           :items="itemsSearch"
           item-text="title"
-          item-value="id"
+          item-value="_id"
           v-model="selectedSearch"
           return-object
           hide-no-data
@@ -25,8 +25,8 @@
               <v-list-item
                 v-for="(category, index) in categories"
                 :key="index"
-                :disabled="category.id == categoryId"
-                @change="updateCategoryId(category.id)"
+                :disabled="category._id == categoryId"
+                @change="updateCategoryId(category._id)"
               >
                 <v-list-item-title>{{ category.title }}</v-list-item-title>
               </v-list-item>
@@ -39,10 +39,10 @@
       <v-col
         v-for="(product, index) in filteredProducts"
         :key="index"
-        value="category.id"
+        value="category._id"
         cols="2"
       >
-        <v-card :title="product.title" :ripple="true" @click="addToCart(product.id)">
+        <v-card :title="product.title" :ripple="true" @click="addToCart(product._id)">
           <v-card-actions>
             <v-img
               :src="require(`@/assets/images/products/${product.thumbnail}`)"
@@ -73,19 +73,21 @@ export default {
     ...mapActions({
         updateCategoryId: 'products/updateCategoryId',
         addToCart: 'carts/addToCart',
-        
+        fetchProducts: 'products/fetchProducts',
+        fetchCategories: 'products/fetchCategories'   
     }),
     resetSearchCategory() {
-      this.categoryId = false
+      this.updateCategoryId(0)
     },
   },
   computed: {
     filteredProducts() {
       if (this.categoryId) {
-        return this.products.filter((s) => s.categoryId == this.categoryId)
-      } else if (this.selectedSearch) {
-        return this.products.filter((s) => s.title == this.selectedSearch.title)
-      }
+        return this.products.filter((product) => product.categoryId == this.categoryId)
+      } 
+      // else if (this.selectedSearch) {
+      //   return this.products.filter((s) => s.title == this.selectedSearch.title)
+      // }
       return this.products
     },
     ...mapState('products', {
@@ -105,7 +107,16 @@ export default {
         this.isLoading = false
       }, 1000)
     },
+    selectedSearch(product) {
+      if (product) {
+        this.addToCart(product._id)
+      }
+    }
   },
+  mounted() {
+    this.fetchProducts();
+    this.fetchCategories();
+  }
 }
 </script>
 

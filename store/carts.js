@@ -16,10 +16,10 @@ export const state = () => ({
 
 export const getters = {
     cartItems: (state, getters, rootState) => {
-        return state.items.map(({id, quantity}) => {
-            let product = rootState.products.products.find(product => product.id === id)
+        return state.items.map(({_id, quantity}) => {
+            let product = rootState.products.products.find(product => product._id === _id)
             return {
-                id: product.id,
+                _id: product._id,
                 title: product.title,
                 price: product.price,
                 quantity
@@ -53,45 +53,45 @@ export const getters = {
 }
 
 export const mutations = {
-    addItem(state, id) {
+    addItem(state, _id) {
         state.items.push({
-            id: id,
+            _id: _id,
             quantity: 1
         })
     },
-    incrementItem(state, id) {
-        state.items.find(item => item.id === id).quantity++
+    incrementItem(state, _id) {
+        state.items.find(item => item._id === _id).quantity++
     },
-    decrementItem(state, id) {
-        let item = state.items.find(item => item.id === id)
+    decrementItem(state, _id) {
+        let item = state.items.find(item => item._id === _id)
         if (item.quantity > 1) {
             item.quantity--
         }
     },
-    removeItem(state, id) {
-        let index = state.items.findIndex(item => item.id === id)
+    removeItem(state, _id) {
+        let index = state.items.findIndex(item => item._id === _id)
         state.items.splice(index, 1)
-        // state.items = state.items.filter(item => item.id !== id)
+        // state.items = state.items.filter(item => item._id !== _id)
     }
 }
 
 export const actions = {
-    addToCart({commit, state}, id) {
-        const productItem = state.items.find(item => item.id === id)
+    addToCart({commit, state}, _id) {
+        const productItem = state.items.find(item => item._id === _id)
     
         if(productItem) {
-            commit('incrementItem', id)
+            commit('incrementItem', _id)
         } else {
-            commit('addItem', id)
+            commit('addItem', _id)
         }
     },
-    increment({commit}, id) {
-        commit('incrementItem', id)
+    increment({commit}, _id) {
+        commit('incrementItem', _id)
     },
-    decrement({commit}, id) {
-        commit('decrementItem', id)
+    decrement({commit}, _id) {
+        commit('decrementItem', _id)
     },
-    remove({commit}, id) {
-        commit('removeItem', id)
+    remove({commit}, _id) {
+        commit('removeItem', _id)
     }
 }
