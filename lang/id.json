@@ -1,0 +1,15 @@
+{
+    "FIELD_REQUIRED": "{field} harus diisi",
+    "FIELD_MIN": "{field} minimal {min} karakter",
+    "FIELD_CONFIRM": "{field} tidak sama dengan {confirm}",
+    "EMAIL_INVALID": "Email harus valid",
+    "EMAIL_EXIST": "Email sudah terdaftar",
+    "EMAIL_NOT_FOUND": "Email tidak ditemukan!",
+    "WRONG_PASSWORD": "Password salah!",
+    "AUTH_REQUIRED": "Anda harus Login!",
+    "UPDATE_SUCCESS": "Data {title} berhasil diupdate",
+    "CREATE_SUCCESS": "Data {title} berhasil ditambah",
+    "DELETE_SUCCESS": "Data {title} berhasil dihapus",
+    "ID_NOT_FOUND": "ID tidak ditemukan"
+
+}
